@@ -6,6 +6,9 @@ namespace F2GTraining.Services
 {
     public class ServiceStorageBlobs
     {
+        //LITERALMENTE HAY QUE CAMBIAR EL HELPER ENTERO
+        //HAY QUE REHACER AMBOS METODOS Y EL CONSTRUCTOR NUEVO CAMBIANDO EL SERVICESTORAGEBLOBS
+        //POR SU EQUIVALENTE EN AMAZON
         private BlobServiceClient client;
 
         public ServiceStorageBlobs(BlobServiceClient client)

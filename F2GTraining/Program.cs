@@ -7,7 +7,7 @@ using Microsoft.Extensions.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//CAMBIAR TODA LA CONFIGURACION DE AZURE POR LA DE AMAZON DENTRO DEL PROGRAM
 
 builder.Services.AddAzureClients(factory =>
 {
@@ -21,6 +21,9 @@ string azureKeys = keyVaultSecret.Value;
 
 BlobServiceClient blobServiceClient = new BlobServiceClient(azureKeys);
 builder.Services.AddTransient<BlobServiceClient>(x => blobServiceClient);
+
+//FIN DE CAMBIO DE CONFIGURACION
+
 builder.Services.AddTransient<ServiceStorageBlobs>();
 
 builder.Services.AddTransient<ServiceAPIF2GTraining>();
