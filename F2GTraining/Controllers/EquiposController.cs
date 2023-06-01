@@ -42,21 +42,18 @@ namespace F2GTraining.Controllers
             return PartialView(await this.service.GetEquipo(token, idequipo));
         }
 
-        [AuthorizeUsers]
+        //[AuthorizeUsers]
         public IActionResult CrearEquipo()
         {
             return View();
         }
 
-        [AuthorizeUsers]
+        //[AuthorizeUsers]
         [HttpPost]
         public async Task<IActionResult> CrearEquipo(string nombre, IFormFile imagen)
         {
-            /*int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
-            string token = HttpContext.Session.GetString("TOKEN");*/
-
-            int idusuario = 1;
-            string token = "Hola";
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
+            string token = HttpContext.Session.GetString("TOKEN");
 
             string extension = System.IO.Path.GetExtension(imagen.FileName);
 
@@ -66,7 +63,8 @@ namespace F2GTraining.Controllers
                 {
                     int rand = new Random().Next(0, 10000);
                     string nombrearchivo = nombre.Replace(" ","") + rand.ToString() + ".png";
-                    await this.service.InsertEquipo(nombrearchivo, stream, nombre, token);
+                    string statusCode = await this.service.InsertEquipo(nombrearchivo, stream, nombre, token);
+                    ViewData["NOSE"] = statusCode;
                 }
 
                 return RedirectToAction("MenuEquipo","Equipos");

@@ -280,7 +280,7 @@ namespace F2GTraining.Services
         #endregion
 
         #region METODOSEQUIPOS
-        public async Task InsertEquipo(string fileName, Stream stream, string nombre, string token)
+        public async Task<string> InsertEquipo(string fileName, Stream stream, string nombre, string token)
         {
 /*            await this.serviceamazon.UploadFileAsync(fileName, stream);
             Stream archivo =  await this.serviceamazon.GetFileAsync(fileName);*/
@@ -294,6 +294,7 @@ namespace F2GTraining.Services
             };
 
             HttpStatusCode response = await this.InsertApiAsync<EquipoModel>(request,model,token);
+            return response.ToString();
         }
 
         public async Task<List<Equipo>> GetEquiposUser(string token)
