@@ -1,3 +1,4 @@
+using Amazon.S3;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using F2GTraining.Services;
@@ -7,26 +8,10 @@ using Microsoft.Extensions.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//CAMBIAR TODA LA CONFIGURACION DE AZURE POR LA DE AMAZON DENTRO DEL PROGRAM
-
-builder.Services.AddAzureClients(factory =>
-{
-    factory.AddSecretClient(builder.Configuration.GetSection("KeyVault"));
-});
-
-SecretClient secretClient = builder.Services.BuildServiceProvider().GetService<SecretClient>();
-KeyVaultSecret keyVaultSecret = await secretClient.GetSecretAsync("StorageAzure");
-
-string azureKeys = keyVaultSecret.Value;
-
-BlobServiceClient blobServiceClient = new BlobServiceClient(azureKeys);
-builder.Services.AddTransient<BlobServiceClient>(x => blobServiceClient);
-
-//FIN DE CAMBIO DE CONFIGURACION
-
-builder.Services.AddTransient<ServiceStorageBlobs>();
-
+builder.Services.AddAWSService<IAmazonS3>();
+builder.Services.AddTransient<ServiceS3Amazon>();
 builder.Services.AddTransient<ServiceAPIF2GTraining>();
+
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {

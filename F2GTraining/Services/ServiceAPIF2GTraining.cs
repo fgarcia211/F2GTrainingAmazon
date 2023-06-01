@@ -16,14 +16,14 @@ namespace F2GTraining.Services
         //EN EL CONSTRUCTOR, DEBEMOS CAMBIAR EL GETVALUE POR EL NUEVO QUE PONGAMOS EN APPSETTINGS
 
         private MediaTypeWithQualityHeaderValue Header;
-        private ServiceStorageBlobs serviceazure;
+        private ServiceS3Amazon serviceamazon;
         private string UrlApiF2G;
 
-        public ServiceAPIF2GTraining(IConfiguration configuration, ServiceStorageBlobs serviceazure)
+        public ServiceAPIF2GTraining(IConfiguration configuration, ServiceS3Amazon serviceazure)
         {
             this.UrlApiF2G = configuration.GetValue<string>("ServicesAmazon:APIF2G");
             this.Header = new MediaTypeWithQualityHeaderValue("application/json");
-            this.serviceazure = serviceazure;
+            this.serviceamazon = serviceamazon;
         }
 
         #region METODOSGENERICOS
@@ -280,17 +280,17 @@ namespace F2GTraining.Services
         #endregion
 
         #region METODOSEQUIPOS
-        public async Task InsertEquipo(string containerName, string blobName, Stream stream, string nombre, string token)
+        public async Task InsertEquipo(string containerName, string fileName, Stream stream, string nombre, string token)
         {
-            await this.serviceazure.UploadBlobAsync(containerName, blobName, stream);
-            string imagen =  await this.serviceazure.GetBlobUriAsync(containerName, blobName);
+            await this.serviceamazon.UploadFileAsync(fileName, stream);
+            Stream archivo =  await this.serviceamazon.GetFileAsync(fileName);
 
             string request = "/api/Equipos";
 
             EquipoModel model = new EquipoModel
             {
                 nombre = nombre,
-                imagen = imagen
+                imagen = archivo.ToString()
             };
 
             HttpStatusCode response = await this.InsertApiAsync<EquipoModel>(request,model,token);
