@@ -66,7 +66,7 @@ namespace F2GTraining.Controllers
                 {
                     int rand = new Random().Next(0, 10000);
                     string nombrearchivo = nombre.Replace(" ","") + rand.ToString() + ".png";
-                    await this.service.InsertEquipo("containerequipos", nombrearchivo, stream, nombre, token);
+                    await this.service.InsertEquipo(nombrearchivo, stream, nombre, token);
                 }
 
                 return RedirectToAction("MenuEquipo","Equipos");
