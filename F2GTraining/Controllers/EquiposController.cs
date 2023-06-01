@@ -60,7 +60,7 @@ namespace F2GTraining.Controllers
 
             string extension = System.IO.Path.GetExtension(imagen.FileName);
 
-            if (extension == ".png")
+            if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
             {
                 using (Stream stream = imagen.OpenReadStream())
                 {
