@@ -20,8 +20,17 @@
     <script src="~/js/registroequipo.js" asp-append-version="true"></script>
     <script>
         function Prueba(){
-            $.post("https://107.21.53.199/api/Equipos", { nombre: "John", imagen: "2pm" }).done(function(data) {
-                console.log(data);
+            $.ajax({
+              url: "https://107.21.53.199/api/Equipos",
+              type: 'POST',
+              data: {"nombre":"nombre","imagen":"imagen"},
+              headers: {"Authorization": @Context.Session.GetString("TOKEN")},
+              error : function(err) {
+                console.log(err)
+              },
+              success: function(data) {
+                console.log(data)
+              }
             });
         }
     </script>
