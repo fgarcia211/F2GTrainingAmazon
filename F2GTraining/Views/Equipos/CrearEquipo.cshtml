@@ -23,7 +23,8 @@
             $.ajax({
               url: "https://107.21.53.199/api/Equipos",
               type: 'POST',
-              data: {"nombre":"nombre","imagen":"imagen"},
+              data: {nombre:"nombre",imagen:"imagen"},
+              dataType: "json",
               headers: {"Authorization": @Context.Session.GetString("TOKEN")},
               error : function(err) {
                 console.log(err)
@@ -32,6 +33,17 @@
                 console.log(data)
               }
             });
+            $.ajax({
+                url: 'YourRestEndPoint',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                method: 'POST',
+                data: YourData,
+                success: function(data){
+                  console.log('succes: '+data);
+                }
+             });
         }
     </script>
 }
