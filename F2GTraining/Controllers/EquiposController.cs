@@ -42,13 +42,13 @@ namespace F2GTraining.Controllers
             return PartialView(await this.service.GetEquipo(token, idequipo));
         }
 
-        //[AuthorizeUsers]
+        [AuthorizeUsers]
         public IActionResult CrearEquipo()
         {
             return View();
         }
 
-        //[AuthorizeUsers]
+        [AuthorizeUsers]
         [HttpPost]
         public async Task<IActionResult> CrearEquipo(string nombre, IFormFile imagen)
         {
