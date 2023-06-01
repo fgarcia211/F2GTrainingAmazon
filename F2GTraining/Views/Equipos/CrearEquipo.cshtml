@@ -20,19 +20,7 @@
     <script src="~/js/registroequipo.js" asp-append-version="true"></script>
     <script>
         function Prueba(){
-            $.ajax({
-                url: 'https://107.21.53.199/api/Equipos',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-                data: {nombre:"nombre",imagen:"imagen"},
-                dataType: "json",
-                method: 'POST',
-                data: YourData,
-                success: function(data){
-                  console.log('succes: '+data);
-                }
-             });
+            console.log("a");
         }
     </script>
 }
