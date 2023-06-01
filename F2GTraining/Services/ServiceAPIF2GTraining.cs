@@ -21,7 +21,7 @@ namespace F2GTraining.Services
 
         public ServiceAPIF2GTraining(IConfiguration configuration, ServiceStorageBlobs serviceazure)
         {
-            this.UrlApiF2G = configuration.GetValue<string>("ServicesAzure:APIF2G");
+            this.UrlApiF2G = configuration.GetValue<string>("ServicesAmazon:APIF2G");
             this.Header = new MediaTypeWithQualityHeaderValue("application/json");
             this.serviceazure = serviceazure;
         }
@@ -29,111 +29,180 @@ namespace F2GTraining.Services
         #region METODOSGENERICOS
         private async Task<T> CallApiAsync<T>(string request)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClientHandler handler = new HttpClientHandler())
             {
-                client.BaseAddress = new Uri(this.UrlApiF2G);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(this.Header);
-                HttpResponseMessage response =
-                    await client.GetAsync(request);
-                if (response.IsSuccessStatusCode)
+                //INDICAMOS AL MANEJADOR COMO SE COMPORTARA AL RECIBIR PETICIONES
+                handler.ServerCertificateCustomValidationCallback =
+                    (message, cert, chain, sslPolicyErrors) =>
+                    {
+                        return true;
+                    };
+
+                using (HttpClient client = new HttpClient(handler))
                 {
-                    T data = await response.Content.ReadAsAsync<T>();
-                    return data;
-                }
-                else
-                {
-                    return default(T);
+                    client.BaseAddress = new Uri(this.UrlApiF2G);
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(this.Header);
+                    HttpResponseMessage response =
+                        await client.GetAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        T data = await response.Content.ReadAsAsync<T>();
+                        return data;
+                    }
+                    else
+                    {
+                        return default(T);
+                    }
                 }
             }
+            
         }
 
-        private async Task<T> CallApiAsync<T>
-            (string request, string token)
+        private async Task<T> CallApiAsync<T>(string request, string token)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClientHandler handler = new HttpClientHandler())
             {
-                client.BaseAddress = new Uri(this.UrlApiF2G);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(this.Header);
-                client.DefaultRequestHeaders.Add
-                    ("Authorization", "bearer " + token);
-                HttpResponseMessage response =
-                    await client.GetAsync(request);
-                if (response.IsSuccessStatusCode)
+                //INDICAMOS AL MANEJADOR COMO SE COMPORTARA AL RECIBIR PETICIONES
+                handler.ServerCertificateCustomValidationCallback =
+                    (message, cert, chain, sslPolicyErrors) =>
+                    {
+                        return true;
+                    };
+
+                using (HttpClient client = new HttpClient(handler))
                 {
-                    T data = await response.Content.ReadAsAsync<T>();
-                    return data;
+                    client.BaseAddress = new Uri(this.UrlApiF2G);
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(this.Header);
+                    client.DefaultRequestHeaders.Add
+                        ("Authorization", "bearer " + token);
+                    HttpResponseMessage response =
+                        await client.GetAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        T data = await response.Content.ReadAsAsync<T>();
+                        return data;
+                    }
+                    else
+                    {
+                        return default(T);
+                    }
                 }
-                else
-                {
-                    return default(T);
-                }
+
             }
+            
         }
 
         private async Task<HttpStatusCode> InsertApiAsync<T>(string request, T objeto)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClientHandler handler = new HttpClientHandler())
             {
-                client.BaseAddress = new Uri(this.UrlApiF2G);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(this.Header);
+                //INDICAMOS AL MANEJADOR COMO SE COMPORTARA AL RECIBIR PETICIONES
+                handler.ServerCertificateCustomValidationCallback =
+                    (message, cert, chain, sslPolicyErrors) =>
+                    {
+                        return true;
+                    };
 
-                string json = JsonConvert.SerializeObject(objeto);
+                using (HttpClient client = new HttpClient(handler))
+                {
+                    client.BaseAddress = new Uri(this.UrlApiF2G);
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(this.Header);
 
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(request, content);
-                return response.StatusCode;
+                    string json = JsonConvert.SerializeObject(objeto);
+
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await client.PostAsync(request, content);
+                    return response.StatusCode;
+                }
+
             }
+            
         }
 
         private async Task<HttpStatusCode> InsertApiAsync<T>(string request, T objeto, string token)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClientHandler handler = new HttpClientHandler())
             {
-                client.BaseAddress = new Uri(this.UrlApiF2G);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(this.Header);
-                client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                //INDICAMOS AL MANEJADOR COMO SE COMPORTARA AL RECIBIR PETICIONES
+                handler.ServerCertificateCustomValidationCallback =
+                    (message, cert, chain, sslPolicyErrors) =>
+                    {
+                        return true;
+                    };
 
-                string json = JsonConvert.SerializeObject(objeto);
+                using (HttpClient client = new HttpClient(handler))
+                {
+                    client.BaseAddress = new Uri(this.UrlApiF2G);
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(this.Header);
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
 
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(request, content);
-                return response.StatusCode;
+                    string json = JsonConvert.SerializeObject(objeto);
+
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await client.PostAsync(request, content);
+                    return response.StatusCode;
+                }
             }
+
+            
         }
 
         private async Task<HttpStatusCode> DeleteApiAsync<T>(string request, string token)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClientHandler handler = new HttpClientHandler())
             {
-                client.BaseAddress = new Uri(this.UrlApiF2G);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(this.Header);
-                client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                //INDICAMOS AL MANEJADOR COMO SE COMPORTARA AL RECIBIR PETICIONES
+                handler.ServerCertificateCustomValidationCallback =
+                    (message, cert, chain, sslPolicyErrors) =>
+                    {
+                        return true;
+                    };
 
-                HttpResponseMessage response = await client.DeleteAsync(request);
-                return response.StatusCode;
+                using (HttpClient client = new HttpClient(handler))
+                {
+                    client.BaseAddress = new Uri(this.UrlApiF2G);
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(this.Header);
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+
+                    HttpResponseMessage response = await client.DeleteAsync(request);
+                    return response.StatusCode;
+                }
+
             }
+            
         }
 
         private async Task<HttpStatusCode> PutApiAsync<T>(string request, T objeto, string token)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClientHandler handler = new HttpClientHandler())
             {
-                client.BaseAddress = new Uri(this.UrlApiF2G);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(this.Header);
-                client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                //INDICAMOS AL MANEJADOR COMO SE COMPORTARA AL RECIBIR PETICIONES
+                handler.ServerCertificateCustomValidationCallback =
+                    (message, cert, chain, sslPolicyErrors) =>
+                    {
+                        return true;
+                    };
 
-                string json = JsonConvert.SerializeObject(objeto);
+                using (HttpClient client = new HttpClient(handler))
+                {
+                    client.BaseAddress = new Uri(this.UrlApiF2G);
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(this.Header);
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
 
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PutAsync(request, content);
-                return response.StatusCode;
+                    string json = JsonConvert.SerializeObject(objeto);
+
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await client.PutAsync(request, content);
+                    return response.StatusCode;
+                }
             }
+            
         }
 
         #endregion
@@ -147,32 +216,43 @@ namespace F2GTraining.Services
 
         public async Task<string> GetTokenAsync(string username, string password)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClientHandler handler = new HttpClientHandler())
             {
-                string request = "/api/Usuarios/Login";
-                client.BaseAddress = new Uri(this.UrlApiF2G);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(this.Header);
-                LoginModel model = new LoginModel
+                //INDICAMOS AL MANEJADOR COMO SE COMPORTARA AL RECIBIR PETICIONES
+                handler.ServerCertificateCustomValidationCallback =
+                    (message, cert, chain, sslPolicyErrors) =>
+                    {
+                        return true;
+                    };
+
+                using (HttpClient client = new HttpClient(handler))
                 {
-                    username = username,
-                    password = password
-                };
-                string jsonModel = JsonConvert.SerializeObject(model);
-                StringContent content = new StringContent(jsonModel, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(request, content);
-                if (response.IsSuccessStatusCode)
-                {
-                    string data = await response.Content.ReadAsStringAsync();
-                    JObject jsonObject = JObject.Parse(data);
-                    string token = jsonObject.GetValue("response").ToString();
-                    return token;
-                }
-                else
-                {
-                    return null;
+                    string request = "/api/Usuarios/Login";
+                    client.BaseAddress = new Uri(this.UrlApiF2G);
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(this.Header);
+                    LoginModel model = new LoginModel
+                    {
+                        username = username,
+                        password = password
+                    };
+                    string jsonModel = JsonConvert.SerializeObject(model);
+                    StringContent content = new StringContent(jsonModel, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await client.PostAsync(request, content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string data = await response.Content.ReadAsStringAsync();
+                        JObject jsonObject = JObject.Parse(data);
+                        string token = jsonObject.GetValue("response").ToString();
+                        return token;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
+
         }
 
         public async Task<Usuario> GetUsuarioAsync(string token)
@@ -340,3 +420,5 @@ namespace F2GTraining.Services
         #endregion
     }
 }
+
+
