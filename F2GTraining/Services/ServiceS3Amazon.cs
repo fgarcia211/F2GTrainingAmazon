@@ -11,7 +11,7 @@ namespace F2GTraining.Services
         public ServiceS3Amazon(IConfiguration configuration
             , IAmazonS3 clientS3)
         {
-            this.BucketName = configuration.GetValue<string>("AWS:BucketName");
+            this.BucketName = configuration.GetValue<string>("ServicesAmazon:BucketName");
             this.ClientS3 = clientS3;
         }
 
