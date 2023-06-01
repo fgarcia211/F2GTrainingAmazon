@@ -19,7 +19,7 @@ namespace F2GTraining.Services
         private ServiceS3Amazon serviceamazon;
         private string UrlApiF2G;
 
-        public ServiceAPIF2GTraining(IConfiguration configuration, ServiceS3Amazon serviceazure)
+        public ServiceAPIF2GTraining(IConfiguration configuration, ServiceS3Amazon serviceamazon)
         {
             this.UrlApiF2G = configuration.GetValue<string>("ServicesAmazon:APIF2G");
             this.Header = new MediaTypeWithQualityHeaderValue("application/json");
