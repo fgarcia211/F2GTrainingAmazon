@@ -282,8 +282,8 @@ namespace F2GTraining.Services
         #region METODOSEQUIPOS
         public async Task<string> InsertEquipo(string fileName, Stream stream, string nombre, string token)
         {
-/*            await this.serviceamazon.UploadFileAsync(fileName, stream);
-            Stream archivo =  await this.serviceamazon.GetFileAsync(fileName);*/
+            await this.serviceamazon.UploadFileAsync(fileName, stream);
+            Stream archivo = await this.serviceamazon.GetFileAsync(fileName);
 
             string request = "/api/Equipos";
 
