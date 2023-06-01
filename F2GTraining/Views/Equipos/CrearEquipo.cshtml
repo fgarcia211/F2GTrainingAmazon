@@ -20,7 +20,7 @@
     <script src="~/js/registroequipo.js" asp-append-version="true"></script>
     <script>
         function Prueba() {
-            console.log(@Context.Session.GetString("TOKEN"));
+
             var formData = {
               nombre: "asd",
               imagen: "asd"
@@ -31,7 +31,7 @@
               url: "https://107.21.53.199/api/Equipos",
               data: formData,
               headers: {
-                  "Authorization": @Context.Session.GetString("TOKEN");
+                  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyRGF0YSI6IntcIklkVXN1YXJpb1wiOjEsXCJOb21icmVcIjpcIkZFUlwiLFwiQ29ycmVvXCI6XCJGRVJARkVSLkVTXCIsXCJDb250cmFzZW5pYVwiOlwiYXNkYXNkYXNkXCIsXCJUZWxlZm9ub1wiOjY0MzY0MzY0MyxcIlRva2VuXCI6XCJTSU4gVE9LRU5cIn0iLCJuYmYiOjE2ODU2MTkxMTQsImV4cCI6MTY4NTYyOTkxNCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA2Mi8iLCJhdWQiOiJBcGlPQXV0aEYyRyJ9.NAtaPWu45rtFzkNGnl27HPiuHM5XF8npd4p8iV8X6MU";
               },
               dataType: "json",
               encode: true,
