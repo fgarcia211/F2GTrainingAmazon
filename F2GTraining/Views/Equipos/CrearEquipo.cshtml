@@ -9,15 +9,37 @@
     <link rel="stylesheet" href="~/css/registroequipo.css" asp-append-version="true" />
 }
 
-    @section ZonaLogueo{
+@section ZonaLogueo{
     <div class="user-section">
         <p>@Context.User.Identity.Name</p>
         <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
     </div>
 }
 
-    @section Scripts{
+@section Scripts{
     <script src="~/js/registroequipo.js" asp-append-version="true"></script>
+    <script>
+        function Prueba() {
+            console.log(@Context.Session.GetString("TOKEN"));
+            var formData = {
+              nombre: "asd",
+              imagen: "asd"
+            };
+
+            $.ajax({
+              type: "POST",
+              url: "https://107.21.53.199/api/Equipos",
+              data: formData,
+              headers: {
+                  "Authorization": @Context.Session.GetString("TOKEN");
+              },
+              dataType: "json",
+              encode: true,
+            }).done(function (data) {
+              console.log(data);
+            });
+        }
+    </script>
 }
 
     <form method="post" enctype="multipart/form-data">
