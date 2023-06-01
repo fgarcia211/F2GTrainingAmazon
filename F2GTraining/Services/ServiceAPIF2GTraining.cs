@@ -290,7 +290,7 @@ namespace F2GTraining.Services
             EquipoModel model = new EquipoModel
             {
                 nombre = nombre,
-                imagen = archivo.ToString()
+                imagen = "HelloBB"
             };
 
             HttpStatusCode response = await this.InsertApiAsync<EquipoModel>(request,model,token);
