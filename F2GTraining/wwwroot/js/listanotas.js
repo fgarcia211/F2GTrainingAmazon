@@ -12,8 +12,8 @@ function listaNotas() {
     Swal.fire({
         title: "Nombre de la Nota",
         html:
-            '<input type="text"/><br/>' +
-            '<input type="text"/>',
+            '<input type="text" id="swaltitulo"/><br/>' +
+            '<input type="text" id="swalcuerpo"/>',
         background: '#111111',
         color: "#CFC0FF",
         showCancelButton: true,
@@ -25,8 +25,8 @@ function listaNotas() {
     }).then(resultado => {
         console.log(resultado)
         if (resultado.isConfirmed) {
-            $('#titulo').val(resultado.value);
-            $('#cuerpo').val(resultado.value);
+            $('#titulo').val($("#swaltitulo").val());
+            $('#cuerpo').val($("#swalcuerpo").val());
             $('#form-new-nota').submit();
         }
         else {

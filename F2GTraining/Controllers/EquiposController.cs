@@ -117,7 +117,7 @@ namespace F2GTraining.Controllers
             }
 
             await this.serviceSQS.SendMessageAsync(notaEnvio);
-            return View();
+            return RedirectToAction("NotasEquipo");
         }
 
     }

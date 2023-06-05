@@ -25,8 +25,12 @@ namespace F2GTraining.Services
             string json = JsonConvert.SerializeObject(nota);
             SendMessageRequest request =
                 new SendMessageRequest(this.UrlQueue, json);
-            request.MessageGroupId = "developers";
-            request.MessageDeduplicationId = "developers" + nota.titulo;
+
+            Guid guid = new Guid();
+
+            request.MessageGroupId = "developers"+ guid.ToString();
+            request.MessageDeduplicationId = "developers" + guid.ToString();
+
             SendMessageResponse response =
                 await this.clientSQS.SendMessageAsync(request);
             HttpStatusCode statusCode = response.HttpStatusCode;
