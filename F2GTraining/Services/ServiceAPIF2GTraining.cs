@@ -18,12 +18,14 @@ namespace F2GTraining.Services
         private MediaTypeWithQualityHeaderValue Header;
         private ServiceS3Amazon serviceamazon;
         private string UrlApiF2G;
+        private string BucketUrl;
 
         public ServiceAPIF2GTraining(IConfiguration configuration, ServiceS3Amazon serviceamazon)
         {
             this.UrlApiF2G = configuration.GetValue<string>("ServicesAmazon:APIF2G");
             this.Header = new MediaTypeWithQualityHeaderValue("application/json");
             this.serviceamazon = serviceamazon;
+            this.BucketUrl = configuration.GetValue<string>("ServicesAmazon:BucketUrl");
         }
 
         #region METODOSGENERICOS
@@ -290,7 +292,7 @@ namespace F2GTraining.Services
             EquipoModel model = new EquipoModel
             {
                 nombre = nombre,
-                imagen = fileName
+                imagen = this.BucketUrl + fileName
             };
 
             HttpStatusCode response = await this.InsertApiAsync<EquipoModel>(request,model,token);
