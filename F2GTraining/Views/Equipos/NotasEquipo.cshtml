@@ -8,7 +8,14 @@
     <link rel="stylesheet" href="~/css/listaNotas.css" asp-append-version="true" />
 }
 
-    @{
+@section ZonaLogueo{
+    <div class="user-section">
+        <p>@Context.User.Identity.Name</p>
+        <a asp-controller="Usuarios" asp-action="CerrarSesion">Cerrar sesion</a>
+    </div>
+}
+
+@{
     List<Nota> notas;
 
     if (ViewData["NOTAS"] != null)
