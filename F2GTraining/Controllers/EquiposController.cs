@@ -3,15 +3,18 @@ using F2GTraining.Filters;
 using ModelsF2GTraining;
 using Microsoft.AspNetCore.Mvc;
 using F2GTraining.Services;
+using F2GTraining.Models;
 
 namespace F2GTraining.Controllers
 {
     public class EquiposController : Controller
     {
         private ServiceAPIF2GTraining service;
+        private ServiceSQS serviceSQS;
 
-        public EquiposController(ServiceAPIF2GTraining service)
+        public EquiposController(ServiceAPIF2GTraining service, ServiceSQS serviceSQS)
         {
+            this.serviceSQS = serviceSQS;
             this.service = service;
         }
 
@@ -42,13 +45,13 @@ namespace F2GTraining.Controllers
             return PartialView(await this.service.GetEquipo(token, idequipo));
         }
 
-        //[AuthorizeUsers]
+        [AuthorizeUsers]
         public IActionResult CrearEquipo()
         {
             return View();
         }
 
-        //[AuthorizeUsers]
+        [AuthorizeUsers]
         [HttpPost]
         public async Task<IActionResult> CrearEquipo(string nombre, IFormFile imagen)
         {
@@ -75,6 +78,29 @@ namespace F2GTraining.Controllers
                 return View();
             }
         
+        }
+
+        public async Task<IActionResult> NotasEquipo()
+        {
+            List<Nota> notas = await this.serviceSQS.ReceiveMessagesAsync();
+            int id = 1;
+            foreach (Nota nota in notas)
+            {
+                nota.Id = id;
+                id++;
+            }
+            ViewData["NOTAS"] = notas;
+            return View();
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> NotasEquipo(Nota nota)
+        {
+            ViewData["NOTAS"] = await this.serviceSQS.ReceiveMessagesAsync();
+            await this.serviceSQS.SendMessageAsync(nota);
+            return View();
         }
 
     }
