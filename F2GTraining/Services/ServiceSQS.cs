@@ -26,7 +26,7 @@ namespace F2GTraining.Services
             SendMessageRequest request =
                 new SendMessageRequest(this.UrlQueue, json);
 
-            Guid guid = new Guid();
+            Guid guid = Guid.NewGuid();
 
             request.MessageGroupId = "developers"+ guid.ToString();
             request.MessageDeduplicationId = "developers" + guid.ToString();
@@ -42,7 +42,7 @@ namespace F2GTraining.Services
             ReceiveMessageRequest request = new ReceiveMessageRequest
             {
                 QueueUrl = UrlQueue,
-                MaxNumberOfMessages = 10,
+                MaxNumberOfMessages = 100,
                 WaitTimeSeconds = 1
             };
             ReceiveMessageResponse response =
