@@ -1,4 +1,8 @@
-﻿@section Scripts{
+﻿@{
+    List<Nota> notas = ViewData["NOTAS"] as List<Nota>;
+}
+
+@section Scripts{
     <script src="~/js/sweetalert2.js" asp-append-version="true"></script>
     <script src="~/js/listanotas.js" asp-append-version="true"></script>
 }
@@ -16,16 +20,22 @@
     </div>
     <div class="sessions-site">
 
-    @foreach (Nota notas in @ViewData["NOTAS"] as List<Nota>)
-    {
-        <div class="session-name" onclick="muestraOpciones(@notas.Id)">
-            <span>@notas.titulo</span>
-        </div>
-        <div class="session-options" id="sessionopt-@notas.Id">
-            <p id="cuerpoNota">@notas.cuerpo</p>
-        </div>
-    }
-
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (Nota nota in notas)
+            {
+                <div class="session-name" onclick="muestraOpciones(@nota.Id)">
+                    <span>@nota.titulo</span>
+                </div>
+                <div class="session-options" id="sessionopt-@nota.Id">
+                    <p id="cuerpoNota">@nota.cuerpo</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p>SIN SESIONES</p>
+        }
     </div>
     <div class="border-sessions"></div>
     <div class="button-zone">
@@ -33,7 +43,10 @@
         <button onclick="listaNotas()" class="new-session">GUARDAR NOTA</button>
     </div>
 </div>
+
 <form id='form-new-nota' method="post">
     <input type="hidden" id="titulo" name="titulo">
     <input type="hidden" id="cuerpo" name="cuerpo">
 </form>
+
+
