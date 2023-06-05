@@ -83,23 +83,40 @@ namespace F2GTraining.Controllers
         public async Task<IActionResult> NotasEquipo()
         {
             List<Nota> notas = await this.serviceSQS.ReceiveMessagesAsync();
-            int id = 1;
-            foreach (Nota nota in notas)
+
+            if (notas != null && notas.Count > 0)
             {
-                nota.Id = id;
-                id++;
+                int id = 1;
+                foreach (Nota nota in notas)
+                {
+                    nota.Id = id;
+                    id++;
+                }
+                ViewData["NOTAS"] = notas;
             }
-            ViewData["NOTAS"] = notas;
+            
             return View();
         }
 
 
 
         [HttpPost]
-        public async Task<IActionResult> NotasEquipo(Nota nota)
+        public async Task<IActionResult> NotasEquipo(Nota notaEnvio)
         {
-            ViewData["NOTAS"] = await this.serviceSQS.ReceiveMessagesAsync();
-            await this.serviceSQS.SendMessageAsync(nota);
+            List<Nota> notas = await this.serviceSQS.ReceiveMessagesAsync();
+
+            if (notas != null && notas.Count > 0)
+            {
+                int id = 1;
+                foreach (Nota nota in notas)
+                {
+                    nota.Id = id;
+                    id++;
+                }
+                ViewData["NOTAS"] = notas;
+            }
+
+            await this.serviceSQS.SendMessageAsync(notaEnvio);
             return View();
         }
 
