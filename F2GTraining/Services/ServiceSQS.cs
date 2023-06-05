@@ -4,8 +4,6 @@ using Newtonsoft.Json;
 using System.Net;
 using F2GTraining.Models;
 
-
-
 namespace F2GTraining.Services
 {
     public class ServiceSQS
