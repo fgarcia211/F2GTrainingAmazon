@@ -42,7 +42,7 @@ namespace F2GTraining.Services
             ReceiveMessageRequest request = new ReceiveMessageRequest
             {
                 QueueUrl = UrlQueue,
-                MaxNumberOfMessages = 100,
+                MaxNumberOfMessages = 10,
                 WaitTimeSeconds = 1
             };
             ReceiveMessageResponse response =
