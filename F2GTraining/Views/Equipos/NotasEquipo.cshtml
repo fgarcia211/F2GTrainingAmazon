@@ -8,8 +8,17 @@
     <link rel="stylesheet" href="~/css/listaNotas.css" asp-append-version="true" />
 }
 
-@{
-    List<Nota> notas = ViewData["NOTAS"] as List<Nota>;
+    @{
+    List<Nota> notas;
+
+    if (ViewData["NOTAS"] != null)
+    {
+        notas = ViewData["NOTAS"] as List<Nota>;
+    }
+    else
+    {
+        notas = null;
+    }
 }
 
 <h1>Notas</h1>
@@ -20,9 +29,9 @@
     </div>
     <div class="sessions-site">
 
-        @if (ViewData["NOTAS"] as List<Nota> != null)
+        @if (notas != null)
         {
-            @foreach (Nota nota in ViewData["NOTAS"] as List<Nota>)
+            @foreach (Nota nota in notas)
             {
                 <div class="session-name" onclick="muestraOpciones(@nota.Id)">
                     <span>@nota.titulo</span>
