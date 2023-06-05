@@ -1,8 +1,4 @@
-﻿@{
-    List<Nota> notas = ViewData["NOTAS"] as List<Nota>;
-}
-
-@section Scripts{
+﻿@section Scripts{
     <script src="~/js/sweetalert2.js" asp-append-version="true"></script>
     <script src="~/js/listanotas.js" asp-append-version="true"></script>
 }
@@ -10,6 +6,10 @@
 @section CSSLinks {
     <link rel="stylesheet" href="~/css/sweetalert2.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/listaNotas.css" asp-append-version="true" />
+}
+
+@{
+    List<Nota> notas = ViewData["NOTAS"] as List<Nota>;
 }
 
 <h1>Notas</h1>
@@ -20,9 +20,9 @@
     </div>
     <div class="sessions-site">
 
-        @if (notas != null && notas.Count > 0)
+        @if (ViewData["NOTAS"] as List<Nota> != null)
         {
-            @foreach (Nota nota in notas)
+            @foreach (Nota nota in ViewData["NOTAS"] as List<Nota>)
             {
                 <div class="session-name" onclick="muestraOpciones(@nota.Id)">
                     <span>@nota.titulo</span>
@@ -36,6 +36,7 @@
         {
             <p>SIN NOTAS</p>
         }
+
     </div>
     <div class="border-sessions"></div>
     <div class="button-zone">
