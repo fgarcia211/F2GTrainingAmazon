@@ -20,7 +20,7 @@
     </div>
     <div class="sessions-site">
 
-        @if (Model != null && Model.Count > 0)
+        @if (notas != null && notas.Count > 0)
         {
             @foreach (Nota nota in notas)
             {
@@ -34,7 +34,7 @@
         }
         else
         {
-            <p>SIN SESIONES</p>
+            <p>SIN NOTAS</p>
         }
     </div>
     <div class="border-sessions"></div>
