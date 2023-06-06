@@ -3,26 +3,26 @@ using Amazon.SQS;
 using Newtonsoft.Json;
 using System.Net;
 using F2GTraining.Models;
+using F2GTrainingAmazon.Helpers;
 
 namespace F2GTraining.Services
 {
     public class ServiceSQS
     {
         private IAmazonSQS clientSQS;
-        private string UrlQueue;
 
-        public ServiceSQS(IAmazonSQS clientSQS, IConfiguration configuration)
+        public ServiceSQS(IAmazonSQS clientSQS)
         {
             this.clientSQS = clientSQS;
-            this.UrlQueue =
-                configuration.GetValue<string>("ServicesAmazon:SQS:UrlQueue");
         }
 
         public async Task SendMessageAsync(Nota nota)
         {
+            string urlQueue = await HelperSecretManager.GetSecretAsync("BucketName");
+
             string json = JsonConvert.SerializeObject(nota);
             SendMessageRequest request =
-                new SendMessageRequest(this.UrlQueue, json);
+                new SendMessageRequest(urlQueue, json);
 
             Guid guid = Guid.NewGuid();
 
@@ -37,9 +37,11 @@ namespace F2GTraining.Services
 
         public async Task<List<Nota>> ReceiveMessagesAsync()
         {
+            string urlQueue = await HelperSecretManager.GetSecretAsync("BucketName");
+
             ReceiveMessageRequest request = new ReceiveMessageRequest
             {
-                QueueUrl = UrlQueue,
+                QueueUrl = urlQueue,
                 MaxNumberOfMessages = 10,
                 WaitTimeSeconds = 1
             };

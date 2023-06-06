@@ -1,4 +1,5 @@
 ﻿using F2GTraining.Models;
+using F2GTrainingAmazon.Helpers;
 using ModelsF2GTraining;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,22 +11,15 @@ namespace F2GTraining.Services
 {
     public class ServiceAPIF2GTraining
     {
-        //CUANDO HAYAMOS CAMBIADO EL HELPER DE SERVICESTORAGEBLOBS POR LOS METODOS DE AMAZON
-        //SE DEBE CAMBIAR EL SERVICESTORAGEBLOBS, POR EL DE AMAZON, TANTO EN CONSTRUCTOR COMO EN METODO INSERTEQUIPO
-        //CAMBIAR EL METODO DE INSERTEQUIPO, SOLO LA PARTE DE SUBIR LA IMAGEN
-        //EN EL CONSTRUCTOR, DEBEMOS CAMBIAR EL GETVALUE POR EL NUEVO QUE PONGAMOS EN APPSETTINGS
-
         private MediaTypeWithQualityHeaderValue Header;
         private ServiceS3Amazon serviceamazon;
         private string UrlApiF2G;
-        private string BucketUrl;
 
         public ServiceAPIF2GTraining(IConfiguration configuration, ServiceS3Amazon serviceamazon)
         {
             this.UrlApiF2G = configuration.GetValue<string>("ServicesAmazon:APIF2G");
             this.Header = new MediaTypeWithQualityHeaderValue("application/json");
             this.serviceamazon = serviceamazon;
-            this.BucketUrl = configuration.GetValue<string>("ServicesAmazon:BucketUrl");
         }
 
         #region METODOSGENERICOS
@@ -284,6 +278,8 @@ namespace F2GTraining.Services
         #region METODOSEQUIPOS
         public async Task<string> InsertEquipo(string fileName, Stream stream, string nombre, string token)
         {
+            string bucketUrl = await HelperSecretManager.GetSecretAsync("BucketUrl");
+
             await this.serviceamazon.UploadFileAsync(fileName, stream);
             Stream archivo = await this.serviceamazon.GetFileAsync(fileName);
 
@@ -292,7 +288,7 @@ namespace F2GTraining.Services
             EquipoModel model = new EquipoModel
             {
                 nombre = nombre,
-                imagen = this.BucketUrl + fileName
+                imagen = bucketUrl + fileName
             };
 
             HttpStatusCode response = await this.InsertApiAsync<EquipoModel>(request,model,token);
