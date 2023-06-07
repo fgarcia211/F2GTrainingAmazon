@@ -18,7 +18,7 @@ namespace F2GTraining.Services
 
         public async Task SendMessageAsync(Nota nota)
         {
-            string urlQueue = await HelperSecretManager.GetSecretAsync("BucketName");
+            string urlQueue = await HelperSecretManager.GetSecretAsync("EnlaceFIFO");
 
             string json = JsonConvert.SerializeObject(nota);
             SendMessageRequest request =
@@ -37,7 +37,7 @@ namespace F2GTraining.Services
 
         public async Task<List<Nota>> ReceiveMessagesAsync()
         {
-            string urlQueue = await HelperSecretManager.GetSecretAsync("BucketName");
+            string urlQueue = await HelperSecretManager.GetSecretAsync("EnlaceFIFO");
 
             ReceiveMessageRequest request = new ReceiveMessageRequest
             {
