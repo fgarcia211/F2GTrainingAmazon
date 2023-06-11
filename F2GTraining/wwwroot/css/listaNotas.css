@@ -1,27 +1,28 @@
-﻿﻿.view-sessions-zone {
+﻿﻿.view-notes-zone {
     width: 80%;
     margin: 20px 10% 20px 10%;
 }
 
-.view-sessions-zone .team-title {
-    background: linear-gradient(0deg, rgba(9,9,9,1) 0%, rgba(177,124,251,1) 100%);
+.view-notes-zone .notes-title {
+    background: linear-gradient(0deg, rgba(74,44,2,1) 0%, rgba(210,122,0,1) 92%);
     padding: 20px 0px 20px 0px;
     border: 1px solid white;
+    margin-top: 30px;
 }
 
-.view-sessions-zone .team-title p {
+.view-notes-zone .notes-title p {
     text-align: center;
     font-size: 27px;
 }
 
-.view-sessions-zone .sessions-site {
+.view-notes-zone .notes-site {
     background-color: white;
     height: 300px;
     overflow-y: scroll;
 }
 
-.view-sessions-zone .sessions-site p {
-    margin-top: 15px;
+.view-notes-zone .notes-site p {
+    margin-top: 95px;
     margin-bottom: 15px;
     margin-left: 15px;
     font-size: 70px;
@@ -30,9 +31,9 @@
     font-weight: bold;
 }
 
-.view-sessions-zone .sessions-site .session-name {
-    background: linear-gradient(0deg, rgba(87,58,121,1) 0%, rgba(210,188,241,1) 100%);
-    color: #32216A;
+.view-notes-zone .notes-site .note-name {
+    background: linear-gradient(0deg, rgba(232,135,2,1) 0%, rgba(255,193,107,1) 92%);
+    color: #774500;
     font-weight: bold;
     text-align: center;
     padding: 10px 0px 10px 0px;
@@ -42,12 +43,12 @@
     border: 1px solid white;
 }
 
-.view-sessions-zone .sessions-site .session-name:hover {
+.view-notes-zone .notes-site .note-name:hover {
     opacity: 0.8
 }
 
-.view-sessions-zone .sessions-site .session-options {
-    background-color: #CFC0FF;
+.view-notes-zone .notes-site .note-options {
+    background-color: #ffce89;
     border-right: 1px solid white;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
@@ -56,7 +57,7 @@
     font-size: small;
 }
 
-.view-sessions-zone .sessions-site .session-options button {
+.view-notes-zone .notes-site .note-options button {
     background-color: black;
     color: white;
     padding: 10px;
@@ -69,26 +70,26 @@
     cursor: pointer;
 }
 
-.view-sessions-zone .sessions-site .session-options button:hover {
+.view-notes-zone .notes-site .note-options button:hover {
     background-color: #6B54B4;
 }
 
-.view-sessions-zone .sessions-site .session-options button.finishbutton {
+.view-notes-zone .notes-site .note-options button.finishbutton {
     width: 50%;
     margin: 0px 25% 0px 25%;
 }
 
-.view-sessions-zone .border-sessions {
-    background: linear-gradient(0deg, rgba(9,9,9,1) 0%, rgba(177,124,251,1) 100%);
+.view-notes-zone .border-notes {
+    background: linear-gradient(0deg, rgba(74,44,2,1) 0%, rgba(210,122,0,1) 92%);
     border: 1px solid white;
     padding: 30px 0px 30px 0px;
 }
 
-.view-sessions-zone .button-zone {
+.view-notes-zone .button-zone {
     display: flex;
 }
 
-.view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+.view-notes-zone .button-zone button.back-button, .view-notes-zone .button-zone button.new-note {
     width: 40%;
     margin: 50px 5% 10px 5%;
     border: 1px solid black;
@@ -96,14 +97,14 @@
     border-radius: 100px;
     padding: 15px;
     color: white;
-    background-color: mediumpurple;
+    background-color: #b56a00;
     transition: background-color 0.5s;
     cursor: pointer;
 }
 
-.view-sessions-zone .button-zone button.back-button:hover, .view-sessions-zone .button-zone button.new-session:hover {
-    color: rebeccapurple;
-    background-color: #C1B3EE;
+.view-notes-zone .button-zone button.back-button:hover, .view-notes-zone .button-zone button.new-note:hover {
+    color: #774500;
+    background-color: #ffce89;
 }
 
 #cuerpoNota {
@@ -112,25 +113,35 @@
 }
 
 .swal2-popup {
-    border: 1px solid #C1B3EE !important;
+    border: 1px solid #ffce89 !important;
 }
 
 .swal2-container {
     height: 810px !important;
 }
 
+.swal2-popup {
+    color: darkorange !important;
+}
+
+.swal2-confirm {
+    background-color: darkorange !important;
+}
+
+.swal2-confirm:hover {
+    border: 1px solid orange !important;
+}
 
 @media (max-width: 940px) {
-
-    .view-sessions-zone .sessions-site p {
+    .view-notes-zone .notes-site p {
         font-size: 55px;
     }
 
-    .view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+    .view-notes-zone .button-zone button.back-button, .view-notes-zone .button-zone button.new-note {
         font-size: 16px;
     }
 
-    .view-sessions-zone .team-title p {
+    .view-notes-zone .notes-title p {
         font-size: 22px;
     }
 
@@ -146,37 +157,35 @@
         width: 90% !important;
     }
 
-    .view-sessions-zone .sessions-site p {
+    .view-notes-zone .notes-site p {
         font-size: 36px;
     }
 
-    .view-sessions-zone .team-title p {
+    .view-notes-zone .notes-title p {
         font-size: 17px;
     }
 
-    .view-sessions-zone .border-sessions {
+    .view-notes-zone .border-notes {
         padding: 20px 0px 20px 0px;
     }
 
-    .view-sessions-zone .button-zone {
+    .view-notes-zone .button-zone {
         display: block;
         margin-top: 10px;
     }
 
-    .view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+    .view-notes-zone .button-zone button.back-button, .view-notes-zone .button-zone button.new-note {
         width: 90%;
         margin: 10px 5% 10px 5%;
         border: 1px solid black;
         font-size: 19px;
         border-radius: 100px;
         padding: 15px;
-        color: white;
-        background-color: mediumpurple;
         transition: background-color 0.5s;
         cursor: pointer;
     }
 
-    .view-sessions-zone .button-zone button.back-button, .view-sessions-zone .button-zone button.new-session {
+    .view-notes-zone .button-zone button.back-button, .view-notes-zone .button-zone button.new-note {
         font-size: 20px;
     }
 
@@ -184,15 +193,15 @@
 
 @media (max-width: 600px) {
 
-    .view-sessions-zone .sessions-site .session-name {
+    .view-notes-zone .notes-site .note-name {
         font-size: 12px;
     }
 
-    .view-sessions-zone .sessions-site .session-options {
+    .view-notes-zone .notes-site .note-options {
         padding: 8px 0px 8px 0px;
     }
 
-    .view-sessions-zone .sessions-site .session-options button {
+    .view-notes-zone .notes-site .note-options button {
         font-size: 10px;
     }
 

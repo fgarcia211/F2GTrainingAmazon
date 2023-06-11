@@ -28,22 +28,20 @@
     }
 }
 
-<h1>Notas</h1>
-
-<div class="view-sessions-zone">
-    <div class="team-title">
-        <p>Notas de Equipo: </p>
+<div class="view-notes-zone">
+    <div class="notes-title">
+        <p>NOTAS DE ENTRENADOR: </p>
     </div>
-    <div class="sessions-site">
+    <div class="notes-site">
 
         @if (notas != null)
         {
             @foreach (Nota nota in notas)
             {
-                <div class="session-name" onclick="muestraOpciones(@nota.Id)">
+                <div class="note-name" onclick="muestraOpciones(@nota.Id)">
                     <span>@nota.titulo</span>
                 </div>
-                <div class="session-options" id="sessionopt-@nota.Id">
+                <div class="note-options" id="sessionopt-@nota.Id">
                     <p id="cuerpoNota">@nota.cuerpo</p>
                 </div>
             }
@@ -54,10 +52,10 @@
         }
 
     </div>
-    <div class="border-sessions"></div>
+    <div class="border-notes"></div>
     <div class="button-zone">
         <button onclick="vuelveInicio()" class="back-button">VOLVER</button>
-        <button onclick="listaNotas()" class="new-session">GUARDAR NOTA</button>
+        <button onclick="listaNotas()" class="new-note">GUARDAR NOTA</button>
     </div>
 </div>
 

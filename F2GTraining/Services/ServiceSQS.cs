@@ -16,6 +16,23 @@ namespace F2GTraining.Services
             this.clientSQS = clientSQS;
         }
 
+        public List<Nota> NotasXIdUsuario(List<Nota> notas, int idusuario)
+        {
+            List<Nota> notaDevolver = new List<Nota>();
+            int id = 1;
+
+            foreach (Nota nota in notas)
+            {
+                if (nota.IdUsuario == idusuario)
+                {
+                    nota.Id = id;
+                    id++;
+                }
+            }
+
+            return notaDevolver;
+        }
+
         public async Task SendMessageAsync(Nota nota)
         {
             string urlQueue = await HelperSecretManager.GetSecretAsync("EnlaceFIFO");

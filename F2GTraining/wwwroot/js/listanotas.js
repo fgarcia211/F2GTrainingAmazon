@@ -8,12 +8,12 @@ function vuelveInicio() {
 }
 
 function listaNotas() {
-    document.getElementsByClassName("view-sessions-zone")[0].style.display = "none";
+    document.getElementsByClassName("view-notes-zone")[0].style.display = "none";
     Swal.fire({
         title: "Nombre de la Nota",
         html:
-            '<input type="text" id="swaltitulo"/><br/>' +
-            '<input type="text" id="swalcuerpo"/>',
+            '<label>Titulo de nota: </label><br/><input style="margin-top: 20px; margin-bottom:20px" type="text" id="swaltitulo"/><br/>' +
+            '<label>Contenido: </label></br><input style="margin-top: 20px; margin-bottom:20px type="text" id="swalcuerpo"/>',
         background: '#111111',
         color: "#CFC0FF",
         showCancelButton: true,
@@ -30,7 +30,7 @@ function listaNotas() {
             $('#form-new-nota').submit();
         }
         else {
-            document.getElementsByClassName("view-sessions-zone")[0].style.display = "block"
+            document.getElementsByClassName("view-notes-zone")[0].style.display = "block"
         }
     });
 }

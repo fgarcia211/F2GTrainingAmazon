@@ -85,7 +85,6 @@
 }
 
 .teamview-menu .player-section {
-    border: 1px solid white;
     max-height: 550px;
     margin-left: 5%;
     height: 550px;
@@ -94,12 +93,28 @@
 
 .teamview-menu .player-section .border-section{
     background-color: black;
+    border: 1px solid white;
+    text-align:center;
     padding: 20px 0px 20px 0px;
     width: 100%;
 }
 
+.teamview-menu .player-section .border-section a {
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    width: 100%;
+}
+
+.teamview-menu .player-section .border-section a:hover {
+    color: aquamarine;
+    transition: color 0.55s;
+    text-shadow: 1px 1px 2px black, 0 0 25px lime, 0 0 5px darkgreen;
+}
+
 .teamview-menu .player-section .player-zone {
     height: 470px;
+    width: 100%;
     background-color: white;
     overflow-y: scroll;
 }
@@ -161,8 +176,7 @@
     height: 630px;
 }
 
-@media (max-width: 1630px){
-
+@media (max-width: 1630px) {
     .teamview-menu .player-section {
         height: 520px;
     }

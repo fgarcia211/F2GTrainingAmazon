@@ -80,43 +80,37 @@ namespace F2GTraining.Controllers
         
         }
 
+        [AuthorizeUsers]
         public async Task<IActionResult> NotasEquipo()
         {
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
             List<Nota> notas = await this.serviceSQS.ReceiveMessagesAsync();
 
-            if (notas != null && notas.Count > 0)
+            if (notas == null)
             {
-                int id = 1;
-                foreach (Nota nota in notas)
-                {
-                    nota.Id = id;
-                    id++;
-                }
+                return View();
+            }
+
+            List<Nota> notasUsuario = this.serviceSQS.NotasXIdUsuario(notas, idusuario);
+
+            if (notasUsuario != null && notasUsuario.Count > 0)
+            {
                 ViewData["NOTAS"] = notas;
             }
-            
+
             return View();
         }
 
 
-
+        [AuthorizeUsers]
         [HttpPost]
         public async Task<IActionResult> NotasEquipo(Nota notaEnvio)
         {
-            List<Nota> notas = await this.serviceSQS.ReceiveMessagesAsync();
-
-            if (notas != null && notas.Count > 0)
-            {
-                int id = 1;
-                foreach (Nota nota in notas)
-                {
-                    nota.Id = id;
-                    id++;
-                }
-                ViewData["NOTAS"] = notas;
-            }
+            int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
+            notaEnvio.IdUsuario = idusuario;
 
             await this.serviceSQS.SendMessageAsync(notaEnvio);
+
             return RedirectToAction("NotasEquipo");
         }
 
