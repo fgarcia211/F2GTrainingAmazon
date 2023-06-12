@@ -1,11 +1,6 @@
 ﻿@section Scripts{
     <script src="~/js/sweetalert2.js" asp-append-version="true"></script>
     <script src="~/js/listanotas.js" asp-append-version="true"></script>
-    <script>
-        $( document ).ready(function() {
-            console.log(@ViewData["IDUSUARIO"]);
-        });
-    </script>
 }
 
 @section CSSLinks {
@@ -34,7 +29,7 @@
 }
 
 <div class="view-notes-zone">
-    <div class="notes-title">
+    <div onclick="console.log(@ViewData["IDUSUARIO"])" class="notes-title">
         <p>NOTAS DE ENTRENADOR: </p>
     </div>
     <div class="notes-site">
