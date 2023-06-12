@@ -85,6 +85,7 @@ namespace F2GTraining.Controllers
         {
             int idusuario = int.Parse(HttpContext.User.FindFirst("IDUSUARIO").Value.ToString());
             List<Nota> notas = await this.serviceSQS.ReceiveMessagesAsync();
+            ViewData["IDUSUARIO"] = idusuario;
 
             if (notas == null)
             {
@@ -92,12 +93,7 @@ namespace F2GTraining.Controllers
             }
 
             List<Nota> notasUsuario = this.serviceSQS.NotasXIdUsuario(notas, idusuario);
-
-            if (notasUsuario != null && notasUsuario.Count > 0)
-            {
-                ViewData["NOTAS"] = notasUsuario;
-                ViewData["IDUSUARIO"] = idusuario;
-            }
+            ViewData["NOTAS"] = notasUsuario;
 
             return View();
         }
