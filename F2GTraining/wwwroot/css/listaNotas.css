@@ -21,8 +21,12 @@
     overflow-y: scroll;
 }
 
-.view-notes-zone .notes-site p {
+.view-notes-zone .notes-site p.no-notes {
     margin-top: 95px;
+}
+
+.view-notes-zone .notes-site p {
+    margin-top: 15px;
     margin-bottom: 15px;
     margin-left: 15px;
     font-size: 70px;

@@ -27,6 +27,7 @@ namespace F2GTraining.Services
                 {
                     nota.Id = id;
                     id++;
+                    notaDevolver.Add(nota);
                 }
             }
 
