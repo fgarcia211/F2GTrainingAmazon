@@ -95,7 +95,8 @@ namespace F2GTraining.Controllers
 
             if (notasUsuario != null && notasUsuario.Count > 0)
             {
-                ViewData["NOTAS"] = notas;
+                ViewData["NOTAS"] = notasUsuario;
+                ViewData["IDUSUARIO"] = idusuario;
             }
 
             return View();

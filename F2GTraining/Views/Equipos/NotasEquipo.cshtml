@@ -1,6 +1,11 @@
 ﻿@section Scripts{
     <script src="~/js/sweetalert2.js" asp-append-version="true"></script>
     <script src="~/js/listanotas.js" asp-append-version="true"></script>
+    <script>
+        $( document ).ready(function() {
+            console.log(@ViewData["IDUSUARIO"]);
+        });
+    </script>
 }
 
 @section CSSLinks {
